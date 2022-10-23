@@ -92,7 +92,7 @@ const createUser = async function (req, res) {
 
         let profileImage1 = await imgUpload.uploadFile(files[0])   // AWS
 
-        const salt = await bcrypt.genSalt(10)                         
+        const salt = await bcrypt.genSalt(10)
         const encyptPassword = await bcrypt.hash(password, salt) // Bcrypt
 
         let obj = {
@@ -114,8 +114,8 @@ const loginUser =
     async function (req, res) {
         try {
             let data = req.body
-            const { email, password } = data  
-            
+            const { email, password } = data
+
             //=====================Checking the validation=====================//
             if (!keyValid(data)) return res.status(400).send({ status: false, message: "Email and Password Required !" })
 
@@ -169,9 +169,6 @@ const getUser = async function (req, res) {
         if (!(isValid(userId) && isValid(userId))) {
             return res.status(400).send({ status: false, message: "userId is not valid" });
         }
-        //   if (validator.isValid(body)) {
-        // return res.status(400).send({ status: false, message: "body should not be empty" });
-        //   }
 
         const userData = await userModel.findById({ _id: userId });
         if (userData) {
@@ -185,6 +182,7 @@ const getUser = async function (req, res) {
 };
 
 //////////////////////////////////////// PUT API////////////////////////////////////////
+
 const updateUserProfile = async (req, res) => {
     try {
         let UserId = req.params.userId

@@ -12,10 +12,10 @@ const uploadFile=async function(file){
         let s3= new aws.S3({apiVersion: '2006-03-01'}); 
 
         let uploadParams={
-            ACL:"public-read",
+            ACL:"public-read",                               //  Access control list 
             Bucket:"classroom-training-bucket",
             Key:"project5/"+file.originalname,
-            Body:file.buffer   //  It manages the balance between various components in order to maintain the speed and provide a faster service.
+            Body:file.buffer      //  It manages the balance between various components in order to maintain the speed and provide a faster service.
         }
 
         s3.upload(uploadParams,function(err,data){

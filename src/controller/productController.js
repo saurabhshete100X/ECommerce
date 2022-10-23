@@ -285,19 +285,19 @@ const updateProduct = async function (req, res) {
         if (product.isDeleted == true) return res.status(400).send({ status: false, messgage: `Product is deleted` })
 
         if (!isString(files))
-                    return res
-                        .status(400)
-                        .send({
-                            status: false,
-                            message: "Please Enter data to update the product",
-                        });
-        
-                const data = {};
-                if (files) {
-                    if (files.length > 0) {
-                        data.productImage = await imgUpload.uploadFile(files[0]);
-                    }
-                }
+            return res
+                .status(400)
+                .send({
+                    status: false,
+                    message: "Please Enter data to update the product",
+                });
+
+        const data = {};
+        if (files) {
+            if (files.length > 0) {
+                data.productImage = await imgUpload.uploadFile(files[0]);
+            }
+        }
 
         let { title, description, price, currencyId, currencyFormat, isFreeShipping, style, availableSizes, installments } = body
 
@@ -312,7 +312,7 @@ const updateProduct = async function (req, res) {
 
             data.description = description
         }
-       
+
         if (!isString(price)) return res.status(400).send({ status: false, message: "price can not be empty" })
         if (price) {
 

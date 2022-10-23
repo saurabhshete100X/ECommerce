@@ -15,10 +15,6 @@ const createOrder = async function (req, res) {
         //request userId from path params
         const { userId } = req.params
 
-        // Checking dublicate order 
-        // const dublicateOrder = await cartModel.findById({ userId: userId });
-        // if(dublicateOrder)  return res.status(400).send({ status: false, message: "Order is Already Created" });
-
         //userId must be a valid objectId
         if (!isValidObjectId(userId)) return res.status(400).send({ status: false, message: "Please provide valid User Id!" });
 
@@ -45,6 +41,7 @@ const createOrder = async function (req, res) {
         for (let i = 0; i < items.length; i++) {
             totalQuantity += items[i].quantity
         }
+    
 
         // cancellable validation => if key is present value must not be empty
         if (cancellable) {
@@ -67,9 +64,9 @@ const createOrder = async function (req, res) {
         //Create order for the user and store in DB
         let orderCreation = await orderModel.create(order)
         //update cart on successfully complition of order and set cart as empty
-        await Success.findOneAndUpdate({ userId: userId, isDeleted: false }, { $set: { items: [], totalPrice: 0, totalItems: 0 } })
+        await cartModel.findOneAndUpdate({ userId: userId, isDeleted: false }, { $set: { items: [], totalPrice: 0, totalItems: 0 } })
         //Successfull oreder details return response to body
-        return res.status(201).send({ status: true, message: `Success`, data: orderCreation });
+        return res.status(201).send({ status: true, message: "Success", data: orderCreation });
     }
     catch (error) {
         res.status(500).send({ status: false, data: error.message });
